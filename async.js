@@ -59,7 +59,6 @@ function runParallel(jobs, parallelNum, timeout = 1000) {
                 resolve(result);
                 // console.info('FINISHF2', innerCounter);
                 // console.info('FINISHS2', secondCounter);
-                break;
             case firstCounter:
                 break;
             default:
