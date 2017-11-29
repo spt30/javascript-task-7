@@ -21,7 +21,7 @@ function runParallel(jobs, parallelNum, timeout = 1000) {
         if (parallelNum <= 0 || !jobs.length) {
             resolve([]);
         }
-        let jobDefine = jobs.map(
+        jobs.forEach(
             job => () => new Promise((eachResolve, eachReject) => {
                 job()
                     .then(eachResolve, eachReject);
@@ -34,7 +34,7 @@ function runParallel(jobs, parallelNum, timeout = 1000) {
             let innerCounter = firstCounter++;
             // console.info(innerCounter);
             // console.info(firstCounter);
-            const resEssence = (jobStartToFinish) => finishJob(jobStartToFinish, innerCounter);
+            let resEssence = (jobStartToFinish) => finishJob(jobStartToFinish, innerCounter);
             // const resEssence = (jobStartToFinish) => finishJob(jobStartToFinish, innerCounter++);
             // const resEssence = (jobStartToFinish) => finishJob(jobStartToFinish, ++innerCounter);
             // console.info(innerCounter);
@@ -48,14 +48,14 @@ function runParallel(jobs, parallelNum, timeout = 1000) {
             // console.info('FINISHF', innerCounter);
             // console.info('FINISHS', secondCounter);
             result[innerCounter] = jobFromStart;
-            if (jobDefine.length === ++secondCounter) {
+            if (jobs.length === ++secondCounter) {
                 console.info('CASE1', jobs.length );
                 resolve(result);
             }
 
-            if (firstCounter < jobDefine.length) {
-                console.info('CASE2', jobDefine.length );
-                startJob(jobDefine[firstCounter]);
+            if (firstCounter < jobs.length) {
+                console.info('CASE2', jobs.length );
+                startJob(jobs[firstCounter]);
             }
             // switch (jobs.length) {
             //     case ++secondCounter:
