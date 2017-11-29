@@ -45,28 +45,28 @@ function runParallel(jobs, parallelNum, timeout = 1000) {
         // console.info('FINISHF', innerCounter);
         // console.info('FINISHS', secondCounter);
         result[innerCounter] = jobFromStart;
-        if (jobs.length === ++secondCounter) {
-            // console.info('CASE1', jobs.length );
-            resolve(result);
-        }
-
-        if (firstCounter < jobs.length) {
-            // console.info('CASE2', jobs.length );
-            startJob(firstCounter++, resolve);
-        }
-        // switch (jobs.length) {
-        //     case ++secondCounter:
-        //         resolve(result);
-        //         // console.info('FINISHF2', innerCounter);
-        //         // console.info('FINISHS2', secondCounter);
-        //         break;
-        //     case firstCounter:
-        //         break;
-        //     default:
-        //         startJob(firstCounter++, resolve);
-        //         // console.info('FINISHF3', innerCounter);
-        //         // console.info('FINISHS3', secondCounter);
+        // if (jobs.length === ++secondCounter) {
+        //     // console.info('CASE1', jobs.length );
+        //     resolve(result);
         // }
+
+        // if (firstCounter < jobs.length) {
+        //     // console.info('CASE2', jobs.length );
+        //     startJob(firstCounter++, resolve);
+        // }
+        switch (jobs.length) {
+            case ++secondCounter:
+                resolve(result);
+                // console.info('FINISHF2', innerCounter);
+                // console.info('FINISHS2', secondCounter);
+                break;
+            case firstCounter:
+                break;
+            default:
+                startJob(firstCounter++, resolve);
+                // console.info('FINISHF3', innerCounter);
+                // console.info('FINISHS3', secondCounter);
+        }
     }
 
     return new Promise(resolve => {
