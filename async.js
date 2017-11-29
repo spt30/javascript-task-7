@@ -11,11 +11,9 @@ exports.runParallel = runParallel;
  */
 
 function runParallel(jobs, parallelNum, timeout = 1000) {
-    // console.log('JOBS', jobs);
     let firstCounter = 0;
     let secondCounter = 0;
     let result = [];
-    // console.log('COUNT', parallelNum);
 
     function currentElement(innerCounter) {
         return new Promise((eachResolve, eachReject) => {
@@ -26,45 +24,19 @@ function runParallel(jobs, parallelNum, timeout = 1000) {
     }
 
     function startJob(innerCounter, resolve) {
-        // console.info('q', firstCounter);
-        // firstCounter++;
-        // let innerCounter = firstCounter++;
-        // console.info(innerCounter);
-        // console.info(firstCounter);
         const resEssence = jobStartToFinish => finishJob(jobStartToFinish, innerCounter, resolve);
-        // const resEssence = (jobStartToFinish) => finishJob(jobStartToFinish, innerCounter++);
-        // const resEssence = (jobStartToFinish) => finishJob(jobStartToFinish, ++innerCounter);
-        // console.info(innerCounter);
-        // console.info('q', firstCounter);
-        // firstCounter++;
         currentElement(innerCounter)
             .then(resEssence)
             .catch(resEssence);
     }
-    function finishJob(jobFromStart, innerCounter, resolve) {
-        // console.info('FINISHF', innerCounter);
-        // console.info('FINISHS', secondCounter);
-        result[innerCounter] = jobFromStart;
-        // if (jobs.length === ++secondCounter) {
-        //     // console.info('CASE1', jobs.length );
-        //     resolve(result);
-        // }
 
-        // if (firstCounter < jobs.length) {
-        //     // console.info('CASE2', jobs.length );
-        //     startJob(firstCounter++, resolve);
-        // }
-        switch (jobs.length) {
-            case ++secondCounter:
-                resolve(result);
-                // console.info('FINISHF2', innerCounter);
-                // console.info('FINISHS2', secondCounter);
-            case firstCounter:
-                break;
-            default:
-                startJob(firstCounter++, resolve);
-                // console.info('FINISHF3', innerCounter);
-                // console.info('FINISHS3', secondCounter);
+    function finishJob(jobFromStart, innerCounter, resolve) {
+        result[innerCounter] = jobFromStart;
+        if (jobs.length === ++secondCounter) {
+            resolve(result);
+        }
+        if (firstCounter < jobs.length) {
+            startJob(firstCounter++, resolve);
         }
     }
 
@@ -75,6 +47,5 @@ function runParallel(jobs, parallelNum, timeout = 1000) {
         while (firstCounter < parallelNum) {
             startJob(firstCounter++, resolve);
         }
-    // jobs.slice(0, parallelNum).forEach(job => );
     });
 }
