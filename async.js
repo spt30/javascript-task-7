@@ -70,7 +70,7 @@ function runParallel(jobs, parallelNum, timeout = 1000) {
     }
 
     return new Promise(resolve => {
-        if (parallelNum <= 0 || !jobs.length) {
+        if (parallelNum <= 0 || jobs.length <= 0) {
             resolve(result);
         }
         while (firstCounter < parallelNum) {
