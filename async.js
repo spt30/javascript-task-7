@@ -14,13 +14,12 @@ function runParallel(jobs, parallelNum, timeout = 1000) {
     // console.log('JOBS', jobs);
     // console.log('COUNT', parallelNum);
     return new Promise((resolve) => {
+        if (parallelNum <= 0 || !jobs.length) {
+            resolve([]);
+        }
         let firstCounter = 0;
         let secondCounter = 0;
         let result = [];
-
-        if (parallelNum <= 0 || !jobs.length) {
-            resolve(result);
-        }
         jobs.forEach(
             job => () => new Promise((eachResolve, eachReject) => {
                 job()
